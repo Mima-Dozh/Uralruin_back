@@ -13,16 +13,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContextFactory<AppDbContext>(opt =>
-            opt
-                .UseNpgsql(
-                    $"Server=localhost;" +
-                    $"Port=5432;" +
-                    $"Database=UralruinDB;" +
-                    $"Username=postgres;" +
-                    $"Password=postgres;"
-                )
-        );
+        services.AddDbContextFactory<AppDbContext>();
 
         services.AddControllers();
         services.AddSwaggerGen();
