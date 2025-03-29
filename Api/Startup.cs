@@ -1,4 +1,4 @@
-
+using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using WebApplication2.Dao;
 
@@ -13,6 +13,17 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContextFactory<AppDbContext>(opt =>
+            opt
+                .UseNpgsql(
+                    $"Server=localhost;" +
+                    $"Port=5432;" +
+                    $"Database=UralruinDB;" +
+                    $"Username=postgres;" +
+                    $"Password=postgres;"
+                )
+        );
+
         services.AddControllers();
         services.AddSwaggerGen();
 
