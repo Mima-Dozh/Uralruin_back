@@ -6,6 +6,7 @@ public static class MapObjectExtensions
     {
         return new MapObjectDto
         {
+            Type = mapObject.Type.ToString(),
             Name = mapObject.Name,
             Description = mapObject.Description,
             Address = mapObject.Address,
