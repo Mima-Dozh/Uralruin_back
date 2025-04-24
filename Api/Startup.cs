@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using WebApplication2.Dao;
-using DataAccess;
+using Uralruin_back.Middleware;
+using System.Text.Json.Serialization;
+using Uralruin_back.Infrastructure.IRepositories;
+using Uralruin_back.Infrastructure.Repositories;
 
 public class Startup
 {
@@ -16,7 +19,14 @@ public class Startup
     {
         services.AddDbContextFactory<AppDbContext>();
 
-        services.AddControllers();
+        services.AddScoped<IMapObjectRepository, MapObjectRepository>();
+        services.AddScoped<IMapRouteRepository, MapRouteRepository>();
+
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        });
+
         services.AddSwaggerGen();
 
         services.Configure<ConfigDemo>(_configuration.GetSection(nameof(ConfigDemo)));
@@ -27,13 +37,14 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
         app.UseRouting();
 
         if (env.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-            app.UseDeveloperExceptionPage();
         }
 
         app.UseEndpoints(endpoints =>

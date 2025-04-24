@@ -1,51 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Uralruin_back.Infrastructure.IRepositories;
 using Uralruin_back.Models.MapRoute;
 
 namespace Uralruin_back.Controlers;
 
-
 [ApiController]
 [Route("/api/v1/routes")]
-public class MapRouteController : ControllerBase
+public class MapRouteController(IMapRouteRepository mapRouteRepository) : ControllerBase
 {
-    private readonly AppDbContext _dbContext;
-
-    public MapRouteController(AppDbContext dbContext) => _dbContext = dbContext;
+    private readonly IMapRouteRepository _mapRouteRepository = mapRouteRepository;
 
     [HttpGet]
-    public async Task<ActionResult<MapRoute[]>> GetAllMapRoutes()
+    public async Task<ActionResult<MapRouteDto[]>> GetAllMapRoutes()
     {
-        return await _dbContext.MapRoutes.ToArrayAsync();
+        var mapRoutes = await _mapRouteRepository.GetAll();
+        return mapRoutes.Select(mapObject => mapObject.ToDto()).ToArray();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<MapRoute>> GetMapRoute(int id)
+    public async Task<ActionResult<MapRouteDto>> GetMapRoute(long id)
     {
-        try
-        {
-            var obj = await _dbContext.MapRoutes.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception();
-            return obj;
-        }
-        catch (Exception)
-        {
-            return NotFound();
-        }
+        var mapRoute = await _mapRouteRepository.Get(id);
+        return mapRoute.ToDto();
     }
 
     [HttpPost]
-    public async Task<ActionResult<MapRoute>> CreateMapRoute(MapRouteDto mapRouteDto)
+    public async Task<ActionResult<MapRouteDto>> CreateMapRoute(MapRouteDto mapRouteDto)
     {
-        var mapRoute = new MapRoute
-        {
-            Name = mapRouteDto.Name,
-            Description = mapRouteDto.Description,
-            Points = mapRouteDto.Points
-        };
-
-        _dbContext.MapRoutes.Add(mapRoute);
-        await _dbContext.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetMapRoute), new { id = mapRoute.Id }, mapRouteDto);
+        var addedMapRoute = await _mapRouteRepository.Add(mapRouteDto);
+        return CreatedAtAction(nameof(GetMapRoute), new { id = addedMapRoute.Id }, addedMapRoute.ToDto());
     }
 }
