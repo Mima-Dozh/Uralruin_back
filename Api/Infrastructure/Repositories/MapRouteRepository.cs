@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataAccess.Models.MapRoute;
+using Microsoft.EntityFrameworkCore;
 using Uralruin_back.Infrastructure.Exceptions;
 using Uralruin_back.Infrastructure.IRepositories;
-using Uralruin_back.Models.MapRoute;
 
 namespace Uralruin_back.Infrastructure.Repositories;
 

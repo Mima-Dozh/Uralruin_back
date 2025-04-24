@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Uralruin_back.Models.MapObject;
+namespace DataAccess.Models.MapObject;
 
 public class MapObject
 {

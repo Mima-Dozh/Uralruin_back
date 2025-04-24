@@ -1,4 +1,4 @@
-﻿using Uralruin_back.Models.MapObject;
+﻿using DataAccess.Models.MapObject;
 
 namespace Uralruin_back.Infrastructure.IRepositories;
 
