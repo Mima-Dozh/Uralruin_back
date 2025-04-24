@@ -1,67 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Uralruin_back.Models;
+using Uralruin_back.Infrastructure.IRepositories;
 using Uralruin_back.Models.MapObject;
 
 namespace Uralruin_back.Controlers;
 
 [ApiController]
 [Route("/api/v1/objects")]
-public class MapObjectController : ControllerBase
+public class MapObjectController(IMapObjectRepository mapObjectRepository) : ControllerBase
 {
-    private readonly AppDbContext _dbContext;
-
-    public MapObjectController(AppDbContext dbContext) => _dbContext = dbContext;
+    private readonly IMapObjectRepository _mapObjectRepository = mapObjectRepository;
 
     [HttpGet]
     public async Task<ActionResult<MapObjectDto[]>> GetAllMapObjects()
     {
-        return await _dbContext.MapObjects.Select(MapObj => MapObj.ToDto()).ToArrayAsync();
+        var mapObjects = await _mapObjectRepository.GetAll();
+        return mapObjects.Select(mapObject => mapObject.ToDto()).ToArray();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<MapObjectDto>> GetMapObject(int id)
+    public async Task<ActionResult<MapObjectDto>> GetMapObject(long id)
     {
-        try
-        {
-            var obj = await _dbContext.MapObjects.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception();
-            return obj.ToDto();
-        }
-        catch (Exception)
-        {
-            return NotFound();
-        }
+        var mapObject = await _mapObjectRepository.Get(id);
+        return mapObject.ToDto();
     }
 
     [HttpPost]
-    public async Task<ActionResult<MapObject>> CreateMapObject(MapObjectDto mapObjectDto)
+    public async Task<ActionResult<MapObjectDto>> CreateMapObject(MapObjectDto mapObjectDto)
     {
-        
-        var parsed = Enum.TryParse<ObjectType>(mapObjectDto.Type, out var objType);
-
-        if (!parsed)
-        {
-            return UnprocessableEntity(
-                new
-                {
-                    message = $"Object type '{mapObjectDto.Type}' is not valid. Valid types are: {string.Join(", ", Enum.GetNames(typeof(ObjectType)))}"
-                }
-            );
-        }
-
-        var mapObject = new MapObject
-        {
-            Type = objType,
-            Name = mapObjectDto.Name,
-            Description = mapObjectDto.Description,
-            Address = mapObjectDto.Address,
-            Latlong = mapObjectDto.Latlong
-        };
-
-        _dbContext.MapObjects.Add(mapObject);
-        await _dbContext.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetMapObject), new { id = mapObject.Id }, mapObjectDto);
-        
+        var addedMapObject = await _mapObjectRepository.Add(mapObjectDto);
+        return CreatedAtAction(nameof(GetMapObject), new { id = addedMapObject.Id }, addedMapObject.ToDto());
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace Uralruin_back.Models;
+﻿namespace Uralruin_back.Models.MapObject;
 
 public enum ObjectType
 {
-    Ruins,
+    Ruins = 1,
     Art,
     Services,
     Food,

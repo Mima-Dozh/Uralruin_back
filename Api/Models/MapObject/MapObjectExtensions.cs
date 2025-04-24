@@ -6,11 +6,12 @@ public static class MapObjectExtensions
     {
         return new MapObjectDto
         {
-            Type = mapObject.Type.ToString(),
+            Type = mapObject.Type,
             Name = mapObject.Name,
             Description = mapObject.Description,
             Address = mapObject.Address,
-            Latlong = mapObject.Latlong
+            Lat = mapObject.Lat,
+            Long = mapObject.Long
         };
     }
 }
