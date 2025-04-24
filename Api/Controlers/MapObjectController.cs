@@ -1,6 +1,6 @@
+using DataAccess.Models.MapObject;
 using Microsoft.AspNetCore.Mvc;
 using Uralruin_back.Infrastructure.IRepositories;
-using Uralruin_back.Models.MapObject;
 
 namespace Uralruin_back.Controlers;
 

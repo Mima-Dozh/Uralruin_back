@@ -1,10 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using FluentValidation;
-using WebApplication2.Dao;
-using Uralruin_back.Middleware;
 using System.Text.Json.Serialization;
 using Uralruin_back.Infrastructure.IRepositories;
 using Uralruin_back.Infrastructure.Repositories;
+using Uralruin_back.Infrastructure.Middleware;
 
 public class Startup
 {
@@ -28,10 +25,6 @@ public class Startup
         });
 
         services.AddSwaggerGen();
-
-        services.Configure<ConfigDemo>(_configuration.GetSection(nameof(ConfigDemo)));
-
-        services.AddScoped<IValidator<WeatherForecast>, WeatherForecastValidator>();
     }
 
 

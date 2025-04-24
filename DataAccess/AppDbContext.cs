@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Uralruin_back.Models.MapObject;
+﻿using DataAccess.Models.MapObject;
+using DataAccess.Models.MapRoute;
+using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
 {
     public DbSet<MapObject> MapObjects { get; set; } = null!;
+    public DbSet<MapRoute> MapRoutes { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

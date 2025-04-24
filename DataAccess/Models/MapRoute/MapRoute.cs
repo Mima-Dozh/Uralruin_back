@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Uralruin_back.Models.MapRoute;
+namespace DataAccess.Models.MapRoute;
 
 public class MapRoute
 {

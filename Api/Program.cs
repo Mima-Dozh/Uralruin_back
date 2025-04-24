@@ -1,5 +1,4 @@
-
-namespace WebApplication2;
+namespace Uralruin_back;
 
 public class Program
 {

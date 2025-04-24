@@ -1,4 +1,4 @@
-﻿using Uralruin_back.Models.MapRoute;
+﻿using DataAccess.Models.MapRoute;
 
 namespace Uralruin_back.Infrastructure.IRepositories;
 

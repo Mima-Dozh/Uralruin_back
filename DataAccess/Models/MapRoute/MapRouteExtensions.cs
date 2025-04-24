@@ -1,4 +1,4 @@
-﻿namespace Uralruin_back.Models.MapRoute;
+﻿namespace DataAccess.Models.MapRoute;
 
 public static class MapRouteExtensions
 {

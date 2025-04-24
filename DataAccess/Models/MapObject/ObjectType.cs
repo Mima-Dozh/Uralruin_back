@@ -1,4 +1,4 @@
-﻿namespace Uralruin_back.Models.MapObject;
+﻿namespace DataAccess.Models.MapObject;
 
 public enum ObjectType
 {
