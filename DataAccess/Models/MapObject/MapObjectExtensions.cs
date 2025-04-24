@@ -1,4 +1,4 @@
-﻿namespace Uralruin_back.Models.MapObject;
+namespace Uralruin_back.Models.MapObject;
 
 public static class MapObjectExtensions
 {
@@ -6,10 +6,12 @@ public static class MapObjectExtensions
     {
         return new MapObjectDto
         {
+            Type = mapObject.Type,
             Name = mapObject.Name,
             Description = mapObject.Description,
             Address = mapObject.Address,
-            Latlong = mapObject.Latlong
+            Lat = mapObject.Lat,
+            Long = mapObject.Long
         };
     }
 }
