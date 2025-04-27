@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
 using WebApplication2.Dao;
+using DataAccess;
 
 public class Startup
 {
