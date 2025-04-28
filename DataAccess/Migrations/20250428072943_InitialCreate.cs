@@ -17,14 +17,31 @@ namespace DataAccess.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    Latlong = table.Column<double[]>(type: "double precision[]", nullable: false)
+                    Lat = table.Column<double>(type: "double precision", nullable: false),
+                    Long = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MapObjects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MapRoutes",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Points = table.Column<int[]>(type: "integer[]", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MapRoutes", x => x.Id);
                 });
         }
 
@@ -33,6 +50,9 @@ namespace DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MapObjects");
+
+            migrationBuilder.DropTable(
+                name: "MapRoutes");
         }
     }
 }
