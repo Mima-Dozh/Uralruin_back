@@ -21,6 +21,15 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
+        catch (BadHttpRequestException ex)
+        {
+            _logger.LogWarning(ex, "Bad request");
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new
+            {
+                error = ex.Message
+            });
+        }
         catch (NotFoundException ex)
         {
             _logger.LogWarning(ex, "Resource not found");

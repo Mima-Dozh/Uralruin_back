@@ -28,7 +28,8 @@ public class MapObjectRepository(AppDbContext dbContext) : IMapObjectRepository
             Description = mapObjectDto.Description,
             Address = mapObjectDto.Address,
             Lat = mapObjectDto.Lat,
-            Long = mapObjectDto.Long
+            Long = mapObjectDto.Long,
+            PhotoPath = Path.GetFileName(mapObjectDto.PhotoPath),
         };
 
         var addedMapObject = await _dbContext.MapObjects.AddAsync(mapObject);

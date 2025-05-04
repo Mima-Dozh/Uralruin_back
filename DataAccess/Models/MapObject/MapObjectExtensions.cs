@@ -11,7 +11,8 @@ public static class MapObjectExtensions
             Description = mapObject.Description,
             Address = mapObject.Address,
             Lat = mapObject.Lat,
-            Long = mapObject.Long
+            Long = mapObject.Long,
+            PhotoPath = mapObject.PhotoPath
         };
     }
 }

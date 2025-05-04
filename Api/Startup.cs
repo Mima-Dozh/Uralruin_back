@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Uralruin_back.Infrastructure.IRepositories;
 using Uralruin_back.Infrastructure.Repositories;
 using Uralruin_back.Infrastructure.Middleware;
+using Microsoft.Extensions.FileProviders;
 
 public class Startup
 {
@@ -43,6 +44,18 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+        });
+
+        var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+        if (!Directory.Exists(uploadsFolder))
+            Directory.CreateDirectory(uploadsFolder);
+
+        app.UseStaticFiles();
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Uploads")),
+            RequestPath = "/uploads"
         });
     }
 }

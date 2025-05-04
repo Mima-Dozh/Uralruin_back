@@ -11,4 +11,5 @@ public class MapObject
     [Required] public string Address { get; set; }
     [Required] public double Lat { get; set; }
     [Required] public double Long { get; set; }
+    [Required] public string PhotoPath { get; set; }
 }
