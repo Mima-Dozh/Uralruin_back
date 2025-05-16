@@ -25,6 +25,15 @@ services:
           memory: 4G
     networks:
       - postgres
+  web:
+    image: sample-image
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5204:5204"
+
 
 networks:
   postgres:

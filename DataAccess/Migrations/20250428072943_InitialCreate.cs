@@ -22,8 +22,7 @@ namespace DataAccess.Migrations
                     Description = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
                     Lat = table.Column<double>(type: "double precision", nullable: false),
-                    Long = table.Column<double>(type: "double precision", nullable: false),
-                    PhotoPath = table.Column<string>(type: "text", nullable: false)
+                    Long = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {

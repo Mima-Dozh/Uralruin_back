@@ -35,6 +35,12 @@ public class Startup
 
         app.UseRouting();
 
+	// В Program.cs или Startup.cs
+	app.UseCors(builder => builder
+    		.WithOrigins("http://localhost:3000") // Укажите ваш фронтенд-адрес
+    		.AllowAnyMethod()
+    		.AllowAnyHeader());
+
         if (env.IsDevelopment())
         {
             app.UseSwagger();
